@@ -1,0 +1,84 @@
+volumes:
+    mariadb_data4:
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: /Users/agunczer/data/mariadb
+    wordpress_data4:
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: /Users/agunczer/data/wordpress
+
+services:
+  nginx:
+    container_name: nginx
+    depends_on: 
+      - wordpress
+    build: "requirements/nginx"
+    ports:
+      - "80:80"
+    # expose:
+    #   - "9000"
+    volumes:
+      - wordpress_data4:/var/www/html
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    restart: always
+    networks:
+      - inception
+      # static-network:
+      #   ipv4_address: $NGINX_IP
+
+  mariadb:
+    container_name: mariadb
+    build: "requirements/mariadb"
+    expose:
+      - "3306"
+    volumes:
+      - mariadb_data4:/var/lib/mysql
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 4s
+      retries: 10
+    restart: always
+    networks:
+      - inception
+      # static-network:
+      #   ipv4_address: $MARIADB_IP
+
+  wordpress:
+    container_name: wordpress
+    depends_on: 
+      mariadb:
+        condition: service_healthy
+    build: "requirements/wordpress"
+    expose:
+      - "9000"
+    restart: always
+    volumes:
+      - wordpress_data4:/var/www/html
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    networks:
+      - inception
+      # static-network:
+      #   ipv4_address: $WP_IP
+
+# networks:
+#   static-network:
+#     ipam:
+#       config:
+#         - subnet: 192.168.10.0/24
+networks:
+  inception:
+    name: inception
+    driver:
+      bridge
