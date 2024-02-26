@@ -1,11 +1,11 @@
-FROM debian:bookworm
+FROM debian:buster
 
 RUN apt-get update
 RUN apt install -y apt-transport-https lsb-release ca-certificates wget 
 RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list 
 
-RUN apt-get update && apt-get install php-fpm php-mysql mariadb-client curl -y
+RUN apt-get update && apt-get install php7.4-fpm php7.4-mysql mariadb-client curl -y
 
 # ADD https://wordpress.org/latest.tar.gz /var/www/latest.tar.gz
 
