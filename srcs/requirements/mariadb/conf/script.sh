@@ -21,9 +21,11 @@ echo "CNF File Modified"
 service mysql start
 
 mariadb -u root -e "alter user 'root'@'localhost' identified by '$MYSQL_ROOT_PASSWORD'";
-mariadb -u root -e "CREATE DATABASE wpdb";
-mariadb -u root -e "CREATE USER 'wpuser'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'";
-mariadb -u root -e "GRANT ALL PRIVILEGES ON wpdb.* TO 'wpuser'@'%' IDENTIFIED BY '$MYSQL_PASSWORD'";
+mariadb -u root -e "CREATE DATABASE $WP_DATABASE";
+mariadb -u root -e "CREATE USER '$WP_USER'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'";
+mariadb -u root -e "GRANT ALL PRIVILEGES ON $WP_DATABASE.* TO '$WP_USER'@'$WP_IP' IDENTIFIED BY '$MYSQL_PASSWORD'";
+mariadb -u root -e "CREATE USER '$WP_ADMIN'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'";
+mariadb -u root -e "GRANT ALL PRIVILEGES ON $WP_DATABASE.* TO '$WP_ADMIN'@'$WP_IP' IDENTIFIED BY '$MYSQL_PASSWORD'";
 mariadb -u root -e "CREATE USER 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'";
 mariadb -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'";
 mariadb -u root -e "FLUSH PRIVILEGES";
@@ -31,7 +33,5 @@ mariadb -u root -e "FLUSH PRIVILEGES";
 echo "Database Setup Complete"
 
 mysqladmin shutdown
-# exec mysqld_safe
-mysqld --bind-address=0.0.0.0
 
-# tail -f /dev/null
+mysqld --bind-address=0.0.0.0

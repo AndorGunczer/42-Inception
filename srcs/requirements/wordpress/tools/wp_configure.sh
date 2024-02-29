@@ -8,15 +8,15 @@ wp core download --allow-root
 
 wp core config \
     --dbhost="mariadb" \
-    --dbname=$MYSQL_DATABASE \
-    --dbuser=$MYSQL_USER \
+    --dbname=$WP_DATABASE \
+    --dbuser=$WP_USER \
     --prompt=$MYSQL_PASSWORD \
     --allow-root
 
 wp core install \
     --url=agunczer.42.fr \
     --title="website" \
-    --admin_user=$MYSQL_USER \
+    --admin_user=$WP_USER \
     --admin_password=$MYSQL_PASSWORD \
     --admin_email=info@wp-cli.org \
     --allow-root
