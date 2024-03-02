@@ -4,13 +4,13 @@ volumes:
         driver_opts:
             type: none
             o: bind
-            device: /Users/agunczer/data/mariadb
+            device: /home/agunczer42fr/data/mariadb
     wordpress_data:
         driver: local
         driver_opts:
             type: none
             o: bind
-            device: /Users/agunczer/data/wordpress
+            device: /home/agunczer42fr/data/wordpress
 
 services:
   nginx:

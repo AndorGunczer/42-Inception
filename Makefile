@@ -10,6 +10,17 @@
 #                                                                              #
 # **************************************************************************** #
 
+host = 127.0.0.1 agunczer.42.fr
+
+# Execute with sudo
+
+make-hosts:
+	@if sudo grep '$(host)' /etc/hosts; then \
+		echo "host already added"; \
+	else \
+		sudo echo $(host) >> /etc/hosts; \
+	fi
+
 all:
 	docker compose -f ./srcs/docker-compose.yml up -d
 
@@ -28,10 +39,10 @@ fclean-macos:
 	echo "MADE CLEAN"
 
 down:
-	sudo docker-compose -f ./srcs/docker-compose.yml down
+	sudo docker compose -f ./srcs/docker-compose.yml down
 	
 down-macos:
-	docker-compose -f ./srcs/docker-compose.yml down
+	docker compose -f ./srcs/docker-compose.yml down
 
 up:
 	sudo docker compose -f ./srcs/docker-compose.yml up -d

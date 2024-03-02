@@ -16,9 +16,14 @@ wp core config \
 wp core install \
     --url=agunczer.42.fr \
     --title="website" \
-    --admin_user=$WP_USER \
+    --admin_user=$WP_ADMIN \
     --admin_password=$MYSQL_PASSWORD \
     --admin_email=info@wp-cli.org \
+    --allow-root
+
+wp user create "${WP_USER}" \
+    "info@wp-cli.org" \
+    --user-pass=$MYSQL_PASSWORD \
     --allow-root
 
 
