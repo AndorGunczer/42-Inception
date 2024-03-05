@@ -20,15 +20,14 @@ echo "CNF File Modified"
 
 service mysql start
 
-mariadb -u root -e "alter user 'root'@'localhost' identified by '$MYSQL_ROOT_PASSWORD'";
-mariadb -u root -e "CREATE DATABASE $WP_DATABASE";
-mariadb -u root -e "CREATE USER '$WP_USER'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'";
-mariadb -u root -e "GRANT ALL PRIVILEGES ON $WP_DATABASE.* TO '$WP_USER'@'$WP_IP' IDENTIFIED BY '$MYSQL_PASSWORD'";
-mariadb -u root -e "CREATE USER '$WP_ADMIN'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'";
-mariadb -u root -e "GRANT ALL PRIVILEGES ON $WP_DATABASE.* TO '$WP_ADMIN'@'$WP_IP' IDENTIFIED BY '$MYSQL_PASSWORD'";
-mariadb -u root -e "CREATE USER 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'";
-mariadb -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'";
-mariadb -u root -e "FLUSH PRIVILEGES";
+mysql -u root -e "CREATE DATABASE $WP_DATABASE;"
+mysql -u root -e "CREATE USER '$WP_USER'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
+mysql -u root -e "GRANT ALL PRIVILEGES ON $WP_DATABASE.* TO '$WP_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
+mysql -u root -e "CREATE USER '$WP_ADMIN'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
+mysql -u root -e "GRANT ALL PRIVILEGES ON $WP_DATABASE.* TO '$WP_ADMIN'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
+mysql -u root -e "CREATE USER 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
+mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';"
+# mysql -u root -e "FLUSH PRIVILEGES";
 
 echo "Database Setup Complete"
 

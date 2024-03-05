@@ -28,7 +28,7 @@ services:
     networks:
       # - inception
       static-network:
-        ipv4_address: $NGINX_IP
+        ipv4_address: ${NGINX_IP}
 
   mariadb:
     container_name: mariadb
@@ -37,6 +37,12 @@ services:
       - "3306"
     volumes:
       - mariadb_data:/var/lib/mysql
+    environment:
+      - WP_DATABASE=${WP_DATABASE}
+      - WP_USER=${WP_USER}
+      - WP_ADMIN=${WP_ADMIN}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     healthcheck:
@@ -47,7 +53,7 @@ services:
     networks:
       # - inception
       static-network:
-        ipv4_address: $MARIADB_IP
+        ipv4_address: ${MARIADB_IP}
 
   wordpress:
     container_name: wordpress
@@ -64,12 +70,13 @@ services:
       - WP_DATABASE=${WP_DATABASE}
       - WP_USER=${WP_USER}
       - WP_ADMIN=${WP_ADMIN}
+      - WP_EMAIL=${WP_EMAIL}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     networks:
       # - inception
       static-network:
-        ipv4_address: $WP_IP
+        ipv4_address: ${WP_IP}
 
 networks:
   static-network:

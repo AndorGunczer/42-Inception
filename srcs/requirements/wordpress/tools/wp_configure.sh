@@ -10,7 +10,7 @@ wp core config \
     --dbhost="mariadb" \
     --dbname=$WP_DATABASE \
     --dbuser=$WP_USER \
-    --prompt=$MYSQL_PASSWORD \
+    --dbpass=$MYSQL_PASSWORD \
     --allow-root
 
 wp core install \
@@ -18,12 +18,12 @@ wp core install \
     --title="website" \
     --admin_user=$WP_ADMIN \
     --admin_password=$MYSQL_PASSWORD \
-    --admin_email=info@wp-cli.org \
+    --admin_email=$WP_EMAIL \
     --allow-root
 
 wp user create "${WP_USER}" \
-    "info@wp-cli.org" \
-    --user-pass=$MYSQL_PASSWORD \
+    $WP_EMAIL \
+    --user_pass=$MYSQL_PASSWORD \
     --allow-root
 
 
