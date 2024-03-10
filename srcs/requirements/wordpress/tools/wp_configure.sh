@@ -18,11 +18,11 @@ wp core install \
     --title="website" \
     --admin_user=$WP_ADMIN \
     --admin_password=$MYSQL_PASSWORD \
-    --admin_email=$WP_EMAIL \
+    --admin_email=$WP_ADMIN_EMAIL \
     --allow-root
 
 wp user create "${WP_USER}" \
-    $WP_EMAIL \
+    $WP_USER_EMAIL \
     --user_pass=$MYSQL_PASSWORD \
     --allow-root
 

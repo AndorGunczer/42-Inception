@@ -29,6 +29,8 @@ fclean:
 	sudo docker volume prune --force
 	sudo docker network prune --force
 	sudo docker volume rm `docker volume ls -q`
+	sudo rm -rf /home/agunczer42fr/data/mariadb/*
+	sudo rm -rf /home/agunczer42fr/data/wordpress/*
 	sudo echo "MADE CLEAN"
 	
 fclean-macos:
@@ -36,6 +38,8 @@ fclean-macos:
 	docker volume prune --force
 	docker network prune --force
 	docker volume rm `docker volume ls -q`
+	rm -rf /Users/agunczer42fr/data/mariadb/*
+	rm -rf /Users/agunczer42fr/data/wordpress/*
 	echo "MADE CLEAN"
 
 down:
